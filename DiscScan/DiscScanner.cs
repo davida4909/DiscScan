@@ -5,6 +5,10 @@ namespace DiscScan
 {
     public class DiscScanner
     {
+        const string op_eq = "=";
+        const string op_add = "+";
+        const string op_upd = ">";
+
         public DiscScanner() 
         { 
         }
@@ -67,27 +71,47 @@ namespace DiscScan
                 MessageBox.Show(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Sync Directory
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destPath"></param>
         public void SyncDirectory(string sourcePath, string destPath)
         {
             try
             {
+                string destFile;
+                Log log = new Log();
                 DirectoryInfo directoryInfo = new DirectoryInfo(sourcePath);
-                Debug.WriteLine(directoryInfo.FullName);
+                //Debug.WriteLine(directoryInfo.FullName);
+                log.Logit(op_upd, sourcePath, destPath);
 
                 // Files
                 FileInfo[] files = directoryInfo.GetFiles();
                 foreach (FileInfo file in files)
                 {
                     // action
-                    Debug.WriteLine(file.FullName);
-                    if (File.Exists(Path.Combine(destPath, file.Name)))
+                    //Debug.WriteLine(file.FullName);
+                    destFile = Path.Combine(destPath, file.Name);
+                    if (File.Exists(destFile))
                     {
                         // check last mod times
+                        if (file.LastWriteTime > File.GetLastWriteTime(destFile))
+                        {
+                            // update
+                            File.Copy(file.FullName, destFile, true);
+                            log.Logit(op_upd, file.FullName, destFile);
+                        }
+                        else
+                        {
+                            log.Logit(op_eq, file.FullName, destFile);
+                        }
                     }
                     else
                     {
-                        File.Copy(file.FullName, Path.Combine(destPath, file.Name), true);
+                        // create
+                        File.Copy(file.FullName, destFile);
+                        log.Logit(op_add, file.FullName, destFile);
                     }
                 }
 
@@ -95,7 +119,7 @@ namespace DiscScan
                 DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
-                    SyncSubDirectory(subDirectory, Path.Combine(destPath, subDirectory.Name)); 
+                    SyncSubDirectory(log, subDirectory, Path.Combine(destPath, subDirectory.Name)); 
                 }
             }
             catch (Exception ex)
@@ -104,15 +128,17 @@ namespace DiscScan
             }
         }
 
-        internal void SyncSubDirectory(DirectoryInfo directory, string destPath)
+        internal void SyncSubDirectory(Log log, DirectoryInfo directory, string destPath)
         {
             try
             {
+                string destFile;
                 Debug.WriteLine(directory.FullName);
 
                 if (!Directory.Exists(destPath))
                 {
                     Directory.CreateDirectory(destPath);
+                    log.Logit(op_add, directory.FullName, destPath);
                 }
 
                 // Files
@@ -120,14 +146,27 @@ namespace DiscScan
                 foreach (FileInfo file in files)
                 {
                     // action
-                    Debug.WriteLine(file.FullName);
-                    if (File.Exists(Path.Combine(destPath, file.Name)))
+                    //Debug.WriteLine(file.FullName);
+                    destFile = Path.Combine(destPath, file.Name);
+                    if (File.Exists(destFile))
                     {
                         // check last mod times
+                        if (file.LastWriteTime > File.GetLastWriteTime(destFile))
+                        {
+                            // update
+                            File.Copy(file.FullName, destFile, true);
+                            log.Logit(op_upd, file.FullName, destFile);
+                        }
+                        else
+                        {
+                            log.Logit(op_eq, file.FullName, destFile);
+                        }
                     }
                     else
                     {
-                        File.Copy(file.FullName, Path.Combine(destPath, file.Name), true);
+                        // create
+                        File.Copy(file.FullName, destFile);
+                        log.Logit(op_add, file.FullName, destFile);
                     }
                 }
 
@@ -135,8 +174,8 @@ namespace DiscScan
                 DirectoryInfo[] subDirectories = directory.GetDirectories();
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
-                    Debug.WriteLine(subDirectory.FullName);
-                    SyncSubDirectory(subDirectory, Path.Combine(destPath, subDirectory.Name));
+                    //Debug.WriteLine(subDirectory.FullName);
+                    SyncSubDirectory(log, subDirectory, Path.Combine(destPath, subDirectory.Name));
                 }
 
             }
