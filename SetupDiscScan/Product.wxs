@@ -25,7 +25,8 @@
 			<Component Id="ProductComponent">
 				<!-- TODO: Insert files, registry keys, and other resources here. -->
 				<File Source="C:\Software\source\repos\DiscScan\DiscScan\bin\Debug\net6.0-windows\DiscScan.exe" Id="DiscScan.exe"  />
-				<!-- <File Source="C:\Software\source\repos\DiscScan\DiscScan\bin\Debug\net6.0-windows\DiscScan.dll" Id="DiscScan.dll"  />
+				<!-- 
+				<File Source="C:\Software\source\repos\DiscScan\DiscScan\bin\Debug\net6.0-windows\DiscScan.dll" Id="DiscScan.dll"  />
 				-->
 			</Component>
 		</ComponentGroup>

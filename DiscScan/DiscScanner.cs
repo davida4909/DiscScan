@@ -83,15 +83,12 @@ namespace DiscScan
                 string destFile;
                 Log log = new Log();
                 DirectoryInfo directoryInfo = new DirectoryInfo(sourcePath);
-                //Debug.WriteLine(directoryInfo.FullName);
                 log.Logit(op_upd, sourcePath, destPath);
 
                 // Files
                 FileInfo[] files = directoryInfo.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    // action
-                    //Debug.WriteLine(file.FullName);
                     destFile = Path.Combine(destPath, file.Name);
                     if (File.Exists(destFile))
                     {
@@ -133,11 +130,15 @@ namespace DiscScan
             try
             {
                 string destFile;
-                //Debug.WriteLine(directory.FullName);
 
-                if (!Directory.Exists(destPath))
+                if (Directory.Exists(destPath))
+                {
+                    log.Logit(op_eq, directory.FullName, destPath);
+                }
+                else
                 {
                     Directory.CreateDirectory(destPath);
+                    Directory.SetCreationTime(destPath, directory.CreationTime);
                     log.Logit(op_add, directory.FullName, destPath);
                 }
 
@@ -145,8 +146,6 @@ namespace DiscScan
                 FileInfo[] files = directory.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    // action
-                    //Debug.WriteLine(file.FullName);
                     destFile = Path.Combine(destPath, file.Name);
                     if (File.Exists(destFile))
                     {
@@ -174,10 +173,8 @@ namespace DiscScan
                 DirectoryInfo[] subDirectories = directory.GetDirectories();
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
-                    //Debug.WriteLine(subDirectory.FullName);
                     SyncSubDirectory(log, subDirectory, Path.Combine(destPath, subDirectory.Name));
                 }
-
             }
             catch (Exception ex)
             {
