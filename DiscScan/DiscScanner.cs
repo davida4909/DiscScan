@@ -133,7 +133,7 @@ namespace DiscScan
             try
             {
                 string destFile;
-                Debug.WriteLine(directory.FullName);
+                //Debug.WriteLine(directory.FullName);
 
                 if (!Directory.Exists(destPath))
                 {

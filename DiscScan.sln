@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscScan", "DiscScan\DiscScan.csproj", "{89C2E0C6-F8C5-44EE-BAE0-F936424683C2}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "SetupDiscScan", "SetupDiscScan\SetupDiscScan.wixproj", "{D31B820B-AF31-4A1D-A987-52A586C30E19}"
+	ProjectSection(ProjectDependencies) = postProject
+		{89C2E0C6-F8C5-44EE-BAE0-F936424683C2} = {89C2E0C6-F8C5-44EE-BAE0-F936424683C2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
