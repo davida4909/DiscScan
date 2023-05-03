@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using DiscScan.Models;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace DiscScan
@@ -16,46 +19,64 @@ namespace DiscScan
         /// Scan all File Sytem Objects in the current path
         /// </summary>
         /// <param name="path"></param>
-        public void ScanDirectory(string path)
+        public List<ScanInfo> ScanDirectory(string path)
         {
             try
             {
-                DirectoryInfo directoryInfo = new DirectoryInfo(path);
-                Debug.WriteLine(directoryInfo.FullName);
+                long driveSize = 0;
+                List<ScanInfo> scanInfos = new List<ScanInfo>();
+                //string? drive = Path.GetPathRoot(path);
 
+                DirectoryInfo directoryInfo = new DirectoryInfo(path);
+                //Debug.WriteLine(directoryInfo.FullName);
+                ScanInfo root = new ScanInfo(ScanInfo.InfoTypes.Folder, directoryInfo.FullName, directoryInfo.Name, "", directoryInfo.LastWriteTime,0);
+                scanInfos.Add(root);
                 // Files
                 FileInfo[] files = directoryInfo.GetFiles();
                 foreach (FileInfo file in files)
                 {
                     // action
-                    Debug.WriteLine(file.FullName);
+                    //Debug.WriteLine(file.FullName);
+                    ScanInfo fileInfo = new ScanInfo(ScanInfo.InfoTypes.File, directoryInfo.FullName, file.Name, file.Extension, file.LastWriteTime, file.Length);
+                    scanInfos.Add(fileInfo);
+                    driveSize += file.Length;
                 }
 
                 // Folders
                 DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
                 foreach (DirectoryInfo subDirectory in subDirectories) 
                 {
-                    ScanSubDirectory(subDirectory);
+                    driveSize += ScanSubDirectory(scanInfos,subDirectory);
                 }
+                root.Size = driveSize;
+                return scanInfos;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                return null;
             }
         }
 
-        internal void ScanSubDirectory(DirectoryInfo directory)
+        internal long ScanSubDirectory(List<ScanInfo> scanInfos, DirectoryInfo directory)
         {
             try
             {
-                Debug.WriteLine(directory.FullName);
+                long driveSize = 0;
+
+                //Debug.WriteLine(directory.FullName);
+                ScanInfo root = new ScanInfo(ScanInfo.InfoTypes.Folder, directory.FullName, directory.Name, "", directory.LastWriteTime, 0);
+                scanInfos.Add(root);
 
                 // Files
                 FileInfo[] files = directory.GetFiles();
                 foreach (FileInfo file in files)
                 {
                     // action
-                    Debug.WriteLine(file.FullName);
+                    //Debug.WriteLine(file.FullName);
+                    ScanInfo fileInfo = new ScanInfo(ScanInfo.InfoTypes.File, directory.FullName, file.Name, file.Extension, file.LastWriteTime, file.Length);
+                    scanInfos.Add(fileInfo);
+                    driveSize += file.Length;
                 }
 
                 // Folders
@@ -63,12 +84,15 @@ namespace DiscScan
                 foreach (DirectoryInfo subDirectory in subDirectories)
                 {
                     //Debug.WriteLine(subDirectory.FullName);
-                    ScanSubDirectory(subDirectory);
+                    driveSize += ScanSubDirectory(scanInfos, subDirectory);
                 }
+                root.Size = driveSize;
+                return driveSize;
             }
             catch (Exception ex) 
             { 
                 MessageBox.Show(ex.Message);
+                return 0;
             }
         }
         /// <summary>
