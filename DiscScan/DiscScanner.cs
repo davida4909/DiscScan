@@ -163,7 +163,9 @@ namespace DiscScan
                 {
                     Directory.CreateDirectory(destPath);
                     Directory.SetCreationTime(destPath, directory.CreationTime);
-                    Directory.SetLastWriteTime(destPath, directory.CreationTime);
+                    Directory.SetLastAccessTime(destPath, directory.LastAccessTime);
+                    Directory.SetLastWriteTime(destPath, directory.LastWriteTime);
+
                     log.Logit(op_add, directory.FullName, destPath);
                 }
 
