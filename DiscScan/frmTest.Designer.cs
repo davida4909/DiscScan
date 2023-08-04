@@ -31,12 +31,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textSourceFolder = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.cmd_SelectPath = new System.Windows.Forms.Button();
+            this.cmd_Scan = new System.Windows.Forms.Button();
+            this.cmd_SelectDestPath = new System.Windows.Forms.Button();
             this.textDestinationFolder = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.cmd_Sync = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -55,35 +55,35 @@
             this.textSourceFolder.Size = new System.Drawing.Size(231, 23);
             this.textSourceFolder.TabIndex = 1;
             // 
-            // button1
+            // cmd_SelectPath
             // 
-            this.button1.Location = new System.Drawing.Point(313, 29);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.cmd_SelectPath.Location = new System.Drawing.Point(313, 29);
+            this.cmd_SelectPath.Name = "cmd_SelectPath";
+            this.cmd_SelectPath.Size = new System.Drawing.Size(45, 23);
+            this.cmd_SelectPath.TabIndex = 2;
+            this.cmd_SelectPath.Text = "...";
+            this.cmd_SelectPath.UseVisualStyleBackColor = true;
+            this.cmd_SelectPath.Click += new System.EventHandler(this.cmd_SelectPath_Click);
             // 
-            // button2
+            // cmd_Scan
             // 
-            this.button2.Location = new System.Drawing.Point(70, 77);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Scan";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.cmd_Scan.Location = new System.Drawing.Point(70, 77);
+            this.cmd_Scan.Name = "cmd_Scan";
+            this.cmd_Scan.Size = new System.Drawing.Size(75, 23);
+            this.cmd_Scan.TabIndex = 3;
+            this.cmd_Scan.Text = "Scan";
+            this.cmd_Scan.UseVisualStyleBackColor = true;
+            this.cmd_Scan.Click += new System.EventHandler(this.cmd_Scan_Click);
             // 
-            // button3
+            // cmd_SelectDestPath
             // 
-            this.button3.Location = new System.Drawing.Point(313, 137);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(45, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "...";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.cmd_SelectDestPath.Location = new System.Drawing.Point(313, 137);
+            this.cmd_SelectDestPath.Name = "cmd_SelectDestPath";
+            this.cmd_SelectDestPath.Size = new System.Drawing.Size(45, 23);
+            this.cmd_SelectDestPath.TabIndex = 6;
+            this.cmd_SelectDestPath.Text = "...";
+            this.cmd_SelectDestPath.UseVisualStyleBackColor = true;
+            this.cmd_SelectDestPath.Click += new System.EventHandler(this.cmd_SelectDestPath_Click);
             // 
             // textDestinationFolder
             // 
@@ -101,27 +101,27 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Dest";
             // 
-            // button4
+            // cmd_Sync
             // 
-            this.button4.Location = new System.Drawing.Point(76, 188);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Sync";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.cmd_Sync.Location = new System.Drawing.Point(76, 188);
+            this.cmd_Sync.Name = "cmd_Sync";
+            this.cmd_Sync.Size = new System.Drawing.Size(75, 23);
+            this.cmd_Sync.TabIndex = 7;
+            this.cmd_Sync.Text = "Sync";
+            this.cmd_Sync.UseVisualStyleBackColor = true;
+            this.cmd_Sync.Click += new System.EventHandler(this.cmd_Sync_Click);
             // 
             // frmTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.cmd_Sync);
+            this.Controls.Add(this.cmd_SelectDestPath);
             this.Controls.Add(this.textDestinationFolder);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cmd_Scan);
+            this.Controls.Add(this.cmd_SelectPath);
             this.Controls.Add(this.textSourceFolder);
             this.Controls.Add(this.label1);
             this.Name = "frmTest";
@@ -136,11 +136,11 @@
         private Label label1;
         private TextBox textSourceFolder;
         private FolderBrowserDialog folderBrowserDialog1;
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button cmd_SelectPath;
+        private Button cmd_Scan;
+        private Button cmd_SelectDestPath;
         private TextBox textDestinationFolder;
         private Label label2;
-        private Button button4;
+        private Button cmd_Sync;
     }
 }

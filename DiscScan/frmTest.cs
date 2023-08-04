@@ -10,7 +10,12 @@ namespace DiscScan
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Select Path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmd_SelectPath_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1= new FolderBrowserDialog();
             DialogResult result = folderBrowserDialog1.ShowDialog();
@@ -25,7 +30,7 @@ namespace DiscScan
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void button2_Click(object sender, EventArgs e)
+        private void cmd_Scan_Click(object sender, EventArgs e)
         {
             DiscScanner ds = new DiscScanner();
             List<ScanInfo> scanInfos = ds.ScanDirectory(textSourceFolder.Text);
@@ -40,8 +45,12 @@ namespace DiscScan
                 }
             }
         }
-
-        private void button3_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Select Destinatin Path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmd_SelectDestPath_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1 = new FolderBrowserDialog();
             DialogResult result = folderBrowserDialog1.ShowDialog();
@@ -50,8 +59,12 @@ namespace DiscScan
                 textDestinationFolder.Text = folderBrowserDialog1.SelectedPath;
             }
         }
-
-        private void button4_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Scan
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmd_Sync_Click(object sender, EventArgs e)
         {
             DiscScanner ds = new DiscScanner();
             ds.SyncDirectory(textSourceFolder.Text, textDestinationFolder.Text);
